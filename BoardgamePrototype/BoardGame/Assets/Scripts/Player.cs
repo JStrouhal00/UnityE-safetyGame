@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
        if(Input.GetKeyDown(KeyCode.Space) && !isMoving)
         {   //Roll a Dice
             stepsToMove = Random.Range(1, 7);
-            print("Dice roalled " + stepsToMove);
+            print("Dice rolled " + stepsToMove);
 
             if(doneSteps + stepsToMove < route.nodeList.Count)
             {
