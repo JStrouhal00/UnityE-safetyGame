@@ -4,9 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Ground
   - Card
-  - Trigger
-  - Player1
   layers:
   - Default
   - TransparentFX

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Node : MonoBehaviour
 {
-    public int nodId;   //Position on the route
+    public int nodId;   //Poisition on the route
     public Text numberText;
     public Node connectedNode;
 
