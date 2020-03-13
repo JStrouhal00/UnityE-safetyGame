@@ -28,11 +28,6 @@ public class CardMaster : MonoBehaviour
             print(cardItem.card.name.ToString());
         }
 
-        foreach (GameObject tile in GameObject.FindGameObjectsWithTag("Trigger"))
-        {
-            objs.Add(tile);
-        }
-
         ViewVector = new Vector3(10f, 10f, -15f);
 
     }

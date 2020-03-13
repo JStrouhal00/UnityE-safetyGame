@@ -14178,7 +14178,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f522dfb6f3ddd16449e4466a7b6f3e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
   obj: {fileID: 1307449806}
+=======
+  obj: {fileID: 1523575288}
+>>>>>>> Stashed changes
 --- !u!224 &1307449806 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3021815096606322512, guid: e1d0f1c7fadc03b42832f9b702a9d68d,
@@ -21933,7 +21937,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f522dfb6f3ddd16449e4466a7b6f3e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
   obj: {fileID: 1956867922}
+=======
+  obj: {fileID: 1523575288}
+>>>>>>> Stashed changes
 --- !u!224 &1956867922 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3021815096606322512, guid: e1d0f1c7fadc03b42832f9b702a9d68d,

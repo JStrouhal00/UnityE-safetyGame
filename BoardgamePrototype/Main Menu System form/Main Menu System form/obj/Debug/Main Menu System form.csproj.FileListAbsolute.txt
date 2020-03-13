@@ -1,0 +1,16 @@
+C:\Users\avmis\source\repos\Main Menu System form\Main Menu System form\obj\Debug\Main Menu System form.csprojAssemblyReference.cache
+C:\Users\avmis\source\repos\Main Menu System form\Main Menu System form\obj\Debug\Main_Menu_System_form.Form1.resources
+C:\Users\avmis\source\repos\Main Menu System form\Main Menu System form\obj\Debug\Main_Menu_System_form.Properties.Resources.resources
+C:\Users\avmis\source\repos\Main Menu System form\Main Menu System form\obj\Debug\Main Menu System form.csproj.GenerateResource.cache
+C:\Users\avmis\source\repos\Main Menu System form\Main Menu System form\obj\Debug\Main Menu System form.csproj.CoreCompileInputs.cache
+C:\Users\avmis\source\repos\Main Menu System form\Main Menu System form\bin\Debug\Main Menu System form.exe.config
+C:\Users\avmis\source\repos\Main Menu System form\Main Menu System form\bin\Debug\Main Menu System form.exe
+C:\Users\avmis\source\repos\Main Menu System form\Main Menu System form\bin\Debug\Main Menu System form.pdb
+C:\Users\avmis\source\repos\Main Menu System form\Main Menu System form\obj\Debug\Main Menu System form.exe
+C:\Users\avmis\source\repos\Main Menu System form\Main Menu System form\obj\Debug\Main Menu System form.pdb
+C:\Users\avmis\source\repos\Main Menu System form\Main Menu System form\obj\Debug\Main_Menu_System_form.Form2.resources
+C:\Users\avmis\source\repos\Main Menu System form\Main Menu System form\obj\Debug\Main_Menu_System_form.Form3.resources
+C:\Users\avmis\source\repos\Main Menu System form\Main Menu System form\bin\Debug\Main Menu System form.exe.manifest
+C:\Users\avmis\source\repos\Main Menu System form\Main Menu System form\bin\Debug\Main Menu System form.application
+C:\Users\avmis\source\repos\Main Menu System form\Main Menu System form\obj\Debug\Main Menu System form.exe.manifest
+C:\Users\avmis\source\repos\Main Menu System form\Main Menu System form\obj\Debug\Main Menu System form.application
