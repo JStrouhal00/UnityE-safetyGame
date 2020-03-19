@@ -22,12 +22,6 @@ public class CardMaster : MonoBehaviour
 
         Shuffle();
 
-        // Print the names of the cards - should be Card 1, Card 2, and Card 3 in a random order
-        foreach (Cards cardItem in Cards.cardList)
-        {
-            print(cardItem.card.name.ToString());
-        }
-
         ViewVector = new Vector3(10f, 10f, -15f);
 
     }

@@ -6,14 +6,20 @@ public class CardMovement : MonoBehaviour
 {
     public Transform obj;
     private Vector3 ViewVector;
-    public float Countdown = 1.0f;
+    float Countdown;
     bool isPlayerColliding = false;
+
+    private void Start()
+    {
+        ViewVector = new Vector3(9f, 5f, -9f);
+    }
 
     // Start the countdown when our player enters the collision range
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "Stone")
+        if (other.gameObject.CompareTag("Tile"))
         {
+            Countdown = 2.0f;
             isPlayerColliding = true;
         }
     }
@@ -21,7 +27,7 @@ public class CardMovement : MonoBehaviour
     // If the player is staying still, chances are they've stopped on that tile, so move the cards
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.name == "Stone" && isPlayerColliding == true)
+        if (isPlayerColliding)
         {
             if (Countdown == 0)
             {
@@ -30,30 +36,30 @@ public class CardMovement : MonoBehaviour
 
                 // Rotate the card about its z-axis so we can see its face
                 obj.Rotate(0, 0, 180);
-                isPlayerColliding = false;
+
+                isPlayerColliding = false;  // Reset the boolean so the event only occurs once
             }
         }
     }
 
-    // If the player is no longer colliding, they've probably continued moving on and we can reset our countdown
+    // If the player is no longer colliding, they've probably continued moving on and we can reset everything
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.name == "Stone")
-        {
-            isPlayerColliding = false;
-        }
+        isPlayerColliding = false;
+        Countdown = 2.0f;
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         // If there is a collision between the player and our node/tile, the countdown starts
-        if (isPlayerColliding == true)
+        if (isPlayerColliding)
         {
             Countdown -= Time.deltaTime;
             if (Countdown <= 0) // This is just to ensure the countdown cannot go below 0
             {
                 Countdown = 0;
+                //isPlayerColliding = false;  // Reset the boolean so the event only occurs once
             }
         }
     }
