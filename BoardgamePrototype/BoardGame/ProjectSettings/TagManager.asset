@@ -5,8 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
-  - Card
-  - Tile
+  - ChanceTrigger
+  - QuestionTrigger
   layers:
   - Default
   - TransparentFX

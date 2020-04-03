@@ -53,6 +53,16 @@ public class Stone : MonoBehaviour
             doneSteps++;
         }
 
+        yield return new WaitForSeconds(0.1f);
+        //Snake & Ladder Check
+        if (nodeList[routePosition].connectedNode != null)
+        {
+            int coNodeId = nodeList[routePosition].connectedNode.nodeId;
+            Vector3 nextPos = nodeList[routePosition].connectedNode.transform.position;
+
+            while (MoveToNextNode(nextPos)) { yield return null; }
+            routePosition = coNodeId;
+        }
         //Check for a win
 
 
