@@ -23,11 +23,11 @@ public class QuestionManager : MonoBehaviour
     {
         ViewVector = new Vector3(12.5f, 13.5f, 0.48f); // The vector location to make the cards readable
 
-        //Copy the array
+        // Copy the array
         Question[] toMix = new Question[questionsReferences.Length];
         questionsReferences.CopyTo(toMix, 0);
 
-        //Suffle the questions
+        // Shuffle the questions
         Question temp;
         for (int i = 0; i < shuffleMoves; i++)
         {
@@ -39,10 +39,9 @@ public class QuestionManager : MonoBehaviour
             toMix[idxB] = temp;
         }
 
-        //Initialize the question stack
+        // Initialise the question stack
         questionStack = new Queue<Question>(toMix);
 
-        //TriggerNextQuestion();
     }
 
     private GameObject CreateCard(Question q, Vector3 position)
