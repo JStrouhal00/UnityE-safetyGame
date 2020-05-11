@@ -3,14 +3,16 @@
 public class CardMovement : MonoBehaviour
 {
     //public Transform obj;
-    float countdown;
-    bool isPlayerColliding = false;
+    float dCountdown;
+    float rCountdown;
+    public bool isPlayerColliding = false;
+    bool outOfPosition = false;
     public QuestionManager qm;
-    public ChanceManager cm;
 
     private void Start()
     {
-        countdown = 2.0f;
+        dCountdown = 2.0f;
+        rCountdown = 5.0f;
     }
 
     // Update is called once per frame
@@ -19,10 +21,20 @@ public class CardMovement : MonoBehaviour
         // If there is a collision between the player and our node/tile, the "draw card" countdown starts
         if (isPlayerColliding)
         {
-            countdown -= Time.deltaTime;
-            if (countdown <= 0) // This is just to ensure the countdown cannot go below 0
+            dCountdown -= Time.deltaTime;
+            if (dCountdown <= 0) // This is just to ensure the countdown cannot go below 0
             {
-                countdown = 0;
+                dCountdown = 0;
+            }
+        }
+
+        // If our card has moved from it's original position, the "return card" countdown starts
+        if (outOfPosition)
+        {
+            rCountdown -= Time.deltaTime;
+            if (rCountdown <= 0)
+            {
+                rCountdown = 0;
             }
         }
     }
@@ -30,7 +42,7 @@ public class CardMovement : MonoBehaviour
     // Start the countdown when our player enters the collision range
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("QuestionTrigger") || other.gameObject.CompareTag("ChanceTrigger"))
+        if (other.gameObject.CompareTag("QuestionTrigger"))
         {
             isPlayerColliding = true;
         }
@@ -41,27 +53,53 @@ public class CardMovement : MonoBehaviour
     {
         if (isPlayerColliding)
         {
-            if (countdown == 0)
+            if (dCountdown == 0)
             {
-                if (other.gameObject.CompareTag("QuestionTrigger"))
+                /*// Move the card so it is readable from the camera's position
+                obj.Translate(ViewVector, Camera.main.transform);
+
+                // Rotate the card about its z-axis so we can see its face
+                obj.Rotate(0, 0, 180);
+
+                //newPos = obj.position; // Store the new card position
+                outOfPosition = true;*/
+
+                //Debug.Log("Question Card Moved!");
+                QuestionMarkAnimator anim = other.GetComponentInChildren<QuestionMarkAnimator>();
+                if(anim != null)
+                {
+                    anim.MoveInFrontOfCamera(() => qm.TriggerNextQuestion(anim));
+                }
+                else
                 {
                     qm.TriggerNextQuestion();
-                    isPlayerColliding = false;  // Reset the boolean so the event only occurs once
                 }
-                if (other.gameObject.CompareTag("ChanceTrigger"))
-                {
-                    cm.TriggerNextChance();
-                    isPlayerColliding = false;
-                }
+                isPlayerColliding = false;  // Reset the boolean so the event only occurs once
             }
         }
+
+        /*if (outOfPosition)
+        {
+            if (rCountdown == 0)
+            {
+                // Move the card so it is no longer readable from the camera's position
+                obj.Translate(-ViewVector, Camera.main.transform);
+
+                // Rotate the card about its z-axis so we can't see its face
+                obj.Rotate(0, 0, 180);
+
+                outOfPosition = false; // Again, reset the boolean
+            }
+        }*/
     }
 
     // If the player is no longer colliding, they've probably continued moving on and we can reset everything
     void OnTriggerExit(Collider other)
     {
         isPlayerColliding = false;
-        countdown = 2.0f;
+        outOfPosition = false;
+        dCountdown = 2.0f;
+        rCountdown = 5.0f;
     }
     
 }

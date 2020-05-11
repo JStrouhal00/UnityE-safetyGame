@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: 1
   m_EditorClassIdentifier: 
   statement: Miss a turn!
+  myChance: 0
+  quantity: 3

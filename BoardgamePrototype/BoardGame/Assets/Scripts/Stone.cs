@@ -16,7 +16,7 @@ public class Stone : MonoBehaviour
     int stepsToMove;
     int doneSteps;
 
-    bool isMoving;
+    public bool isMoving;
 
     void Start()
     {
@@ -41,15 +41,15 @@ public class Stone : MonoBehaviour
             yield break;
         }
         isMoving = true;
-        while(stepsToMove > 0)
+        while(stepsToMove != 0)
         {
-            routePosition++;
+            routePosition += stepsToMove < 0 ? -1 : 1;
             Vector3 nextPos = route.nodeList[routePosition].transform.position;
 
             while(MoveToNextNode(nextPos)) { yield return null; }
 
             yield return new WaitForSeconds(0.1f);
-            stepsToMove--;
+            stepsToMove -= stepsToMove < 0 ? -1 : 1;
             doneSteps++;
         }
 
@@ -67,7 +67,8 @@ public class Stone : MonoBehaviour
 
 
         //Update the gamemanager
-
+        if (!GetComponent<CardMovement>().isPlayerColliding)
+            GameManager.instance.state = GameManager.States.SWITCH_PLAYER;
 
 
 
@@ -81,7 +82,7 @@ public class Stone : MonoBehaviour
     public void MakeTurn(int diceNumber)
     {
         stepsToMove = diceNumber;
-        if (doneSteps + stepsToMove < route.nodeList.Count)
+        if (doneSteps + stepsToMove <= route.nodeList.Count)
         {
             StartCoroutine(Move());
         }

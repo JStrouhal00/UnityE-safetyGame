@@ -2,7 +2,7 @@
 
 [CreateAssetMenu(menuName = "Question Card")]
 
-public class Question : ScriptableObject
+public class Question : CardSO
 {
     public string question;
     public string answerA;

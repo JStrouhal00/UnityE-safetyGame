@@ -15,8 +15,16 @@ public class QuestionUI : MonoBehaviour
 
     public void ShowQuestion(Question q)
     {
+        answerA.transform.parent.gameObject.SetActive(true);
+        answerB.transform.parent.gameObject.SetActive(true);
         answerA.text = q.answerA;
         answerB.text = q.answerB;
+        Show(true);
+    }
+
+    public void ShowChance(Chance c) {
+        answerA.transform.parent.gameObject.SetActive(false);
+        answerB.transform.parent.gameObject.SetActive(false);
         Show(true);
     }
 
@@ -29,11 +37,12 @@ public class QuestionUI : MonoBehaviour
     {
         if (qm.CheckAnswer(true))
         {
-            //qm.TriggerNextQuestion();
-            Show(false);
-            qm.CardShow(false);
+            CorrectAnswer();
 
-            // Below will be the code that allows for player movement (which is whether they got it right or wrong)
+        }
+        else
+        {
+            WrongAnswer();
         }
     }
 
@@ -41,11 +50,31 @@ public class QuestionUI : MonoBehaviour
     {
         if (qm.CheckAnswer(false))
         {
-            //qm.TriggerNextQuestion();
-            Show(false);
-            qm.CardShow(false);
-
-            // Below will be the code that allows for player movement (which is whether they got it right or wrong)
+            CorrectAnswer();
         }
+        else
+        {
+            WrongAnswer();
+        }
+    }
+
+    private void WrongAnswer()
+    {
+        Show(false);
+        qm.CardShow(false);
+        GameManager.instance.GetActivePlayer().AddScore(-5);
+        GameManager.instance.state = GameManager.States.SWITCH_PLAYER;
+    }
+
+    private void CorrectAnswer()
+    {
+        //qm.TriggerNextQuestion();
+        Show(false);
+        qm.CardShow(false);
+        GameManager.instance.GetActivePlayer().AddScore(10);
+        GameManager.instance.noSwitching = true;
+        GameManager.instance.state = GameManager.States.SWITCH_PLAYER;
+        // Below will be the code that allows for player movement (which is whether they got it right or wrong)
+        //GameManager.instance.state = GameManager.States.ROLL_DICE;
     }
 }

@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: 3
   m_EditorClassIdentifier: 
   statement: Go back 3 spaces!
+  myChance: 1
+  quantity: -3

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,12 +12,18 @@ public class GameManager : MonoBehaviour
     int activePlayer;
     int diceNumber;
 
-    [System.Serializable]
+    public Camera camera;
+    public Stone[] stones;
+    private int stonesUsed = 0;
 
+    [System.Serializable]
     public class Player
     {
         public string PlayerName;
         public Stone stone;
+
+        public int score = 0;
+        public bool turnMiss = false;
 
         public enum PlayerTypes
         {
@@ -25,10 +32,25 @@ public class GameManager : MonoBehaviour
         }
         public PlayerTypes playertype;
 
+        public Player(string playerName, Stone stone, PlayerTypes playertype)
+        {
+            PlayerName = playerName;
+            this.stone = stone;
+            this.score = 0;
+            this.playertype = playertype;
+        }
+
+        public void AddScore(int score)
+        {
+            this.score = Mathf.Max(this.score + score, 0);
+        }
 
     }
 
     public List<Player> playerList = new List<Player>();
+    public bool gameStarted = false;
+    private bool switched = false;
+    public bool noSwitching = false;
 
     public enum States
     {
@@ -42,10 +64,17 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+        gameStarted = true;
     }
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R)) {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
+        }
+        if(gameStarted == false) {
+            return;
+        }
         if(playerList[activePlayer].playertype == Player.PlayerTypes.CPU)
         {
             switch (state)
@@ -57,6 +86,12 @@ public class GameManager : MonoBehaviour
                     break;
                 case States.ROLL_DICE:
                     {
+                        if (GetActivePlayer().turnMiss) {
+                            state = States.SWITCH_PLAYER;
+                            GetActivePlayer().turnMiss = false;
+                            return;
+                        }
+
                         StartCoroutine(RollDiceDelay());
                         state = States.WAITING;
 
@@ -64,10 +99,14 @@ public class GameManager : MonoBehaviour
                     break;
                 case States.SWITCH_PLAYER:
                     {
-                        activePlayer++;
-                        activePlayer %= playerList.Count;
+                        if (!switched && !noSwitching) {
+                            activePlayer++;
+                            activePlayer %= playerList.Count;
+                            switched = true;
+                        }
+                        
 
-                        state = States.ROLL_DICE;
+                        //state = States.ROLL_DICE;
 
                     }
                     break;
@@ -78,7 +117,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator RollDiceDelay()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.2f);
         //diceNumber = Random.Range(1, 7);
 
         //ROLL THE PHYSICAL DICE
@@ -94,7 +133,40 @@ public class GameManager : MonoBehaviour
         //Make a Turn
         playerList[activePlayer].stone.MakeTurn(diceNumber);
     }
-    
 
-        
+    private IEnumerator SwitchStates(States state, float delay=0) {
+        yield return new WaitForSeconds(delay);
+
+        this.state = state;
+    }
+    
+    public Player GetActivePlayer()
+    {
+        return playerList[activePlayer];
+    }
+    
+    public void ResetPlayers()
+    {
+        playerList.Clear();
+    }
+
+    public void AddPlayer(string name)
+    {
+        playerList.Add(new Player(name, GetFreeStone(), Player.PlayerTypes.HUMAN));
+    }
+
+    private Stone GetFreeStone()
+    {
+        Stone s = stones[stonesUsed];
+        stonesUsed++;
+        return s;
+    }
+
+    public void RollDiceButton() {
+        if (state != States.SWITCH_PLAYER) return;
+
+        state = States.ROLL_DICE;
+        switched = false;
+        noSwitching = false;
+    }
 }

@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed9686a688977da4d97e4a8275b8da4a, type: 3}
   m_Name: 2
   m_EditorClassIdentifier: 
-  statement: Advance 2 spaces!
+  statement: Go forward 2 spaces!
+  myChance: 1
+  quantity: 2
