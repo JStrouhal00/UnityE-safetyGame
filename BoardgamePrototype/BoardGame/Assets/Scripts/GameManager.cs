@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class GameManager : MonoBehaviour
     public Camera camera;
     public Stone[] stones;
     private int stonesUsed = 0;
+
+    [SerializeField] private GameObject winScreen;
+    [SerializeField] private Text winText;
 
     [System.Serializable]
     public class Player
@@ -64,17 +68,15 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        gameStarted = true;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R)) {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
-        }
         if(gameStarted == false) {
             return;
         }
+
+        /*
         if(playerList[activePlayer].playertype == Player.PlayerTypes.CPU)
         {
             switch (state)
@@ -112,6 +114,42 @@ public class GameManager : MonoBehaviour
                     break;
             }
 
+        }
+        */
+
+        switch (state)
+        {
+            case States.WAITING:
+                {
+                    //IDLE
+                }
+                break;
+            case States.ROLL_DICE:
+                {
+                    if (GetActivePlayer().turnMiss) {
+                        state = States.SWITCH_PLAYER;
+                        GetActivePlayer().turnMiss = false;
+                        return;
+                    }
+
+                    StartCoroutine(RollDiceDelay());
+                    state = States.WAITING;
+
+                }
+                break;
+            case States.SWITCH_PLAYER:
+                {
+                    if (!switched && !noSwitching) {
+                        activePlayer++;
+                        activePlayer %= playerList.Count;
+                        switched = true;
+                    }
+                    
+
+                    //state = States.ROLL_DICE;
+
+                }
+                break;
         }
     }
 
@@ -168,5 +206,25 @@ public class GameManager : MonoBehaviour
         state = States.ROLL_DICE;
         switched = false;
         noSwitching = false;
+    }
+
+    public void WinTrigger() {
+        gameStarted = false;
+
+        Player winner = playerList[0].score > playerList[1].score ? playerList[0] : playerList[1];
+        string winnerText = winner.PlayerName + " wins with " + winner.score + " points!";
+        if (playerList[0].score == playerList[1].score) {
+            winnerText = "It's a tie!";
+        }
+
+        winText.text = winnerText;
+        winScreen.SetActive(true);
+
+        Leaderboard.Record(playerList[0].PlayerName, playerList[0].score);
+        Leaderboard.Record(playerList[1].PlayerName, playerList[1].score);
+    }
+
+    public void GoToMenu() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

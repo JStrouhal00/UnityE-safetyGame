@@ -10,15 +10,18 @@ public class UIManager : MonoBehaviour
 
     private Dictionary<string, Text> textDic = new Dictionary<string, Text>();
 
-    private void Start() {
+    public void Initialize() {
         foreach (var player in GameManager.instance.playerList) {
             var t = Instantiate(playerScorePrefab, content);
+            t.color = player.stone.gameObject.GetComponent<Renderer>().material.color;
             t.text = player.PlayerName + ": 0";
             textDic.Add(player.PlayerName, t);
         }
     }
 
     private void Update() {
+        if (!GameManager.instance.gameStarted) return;
+
         foreach (var player in GameManager.instance.playerList) {
             textDic[player.PlayerName].text = player.PlayerName + ": " + player.score.ToString();
         }

@@ -24,7 +24,7 @@ public class MenusManager : MonoBehaviour
         Leaderboard.LoadScores();
         leaderboard.text = Leaderboard.ScoresToString();
 
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
     }
 
     public void StartButton()
@@ -37,9 +37,13 @@ public class MenusManager : MonoBehaviour
         }
         GameManager.instance.gameStarted = true;
 
+        FindObjectOfType<UIManager>().Initialize();
+
         mainPanel.SetActive(false);
         leaderboardPanel.SetActive(false);
         startPanel.SetActive(false);
+
+        Time.timeScale = 1f;
     }
 
     public void BackButton()
@@ -51,12 +55,12 @@ public class MenusManager : MonoBehaviour
 
     public void GoToStart()
     {
-        //mainPanel.SetActive(false);
-        //leaderboardPanel.SetActive(false);
-        //startPanel.SetActive(true);
+        mainPanel.SetActive(false);
+        leaderboardPanel.SetActive(false);
+        startPanel.SetActive(true);
 
-        gameObject.SetActive(false);
-        Time.timeScale = 1f;
+        //gameObject.SetActive(false);
+        //Time.timeScale = 1f;
     }
 
     public void GoToLeaderboard()

@@ -46,6 +46,11 @@ public class CardMovement : MonoBehaviour
         {
             isPlayerColliding = true;
         }
+
+        if (other.gameObject.CompareTag("End")) {
+            GameManager.instance.GetActivePlayer().AddScore(40);
+            GameManager.instance.WinTrigger();
+        }
     }
 
     // If the player is staying still, chances are they've stopped on that tile, so move the cards

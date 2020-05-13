@@ -43,7 +43,12 @@ public class Stone : MonoBehaviour
         isMoving = true;
         while(stepsToMove != 0)
         {
+           
             routePosition += stepsToMove < 0 ? -1 : 1;
+            if (routePosition > route.nodeList.Count-1) {
+                routePosition--;
+                break;
+            }
             Vector3 nextPos = route.nodeList[routePosition].transform.position;
 
             while(MoveToNextNode(nextPos)) { yield return null; }
@@ -51,6 +56,7 @@ public class Stone : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             stepsToMove -= stepsToMove < 0 ? -1 : 1;
             doneSteps++;
+            
         }
 
         yield return new WaitForSeconds(0.1f);

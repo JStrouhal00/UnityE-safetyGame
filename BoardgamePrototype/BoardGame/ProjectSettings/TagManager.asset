@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - ChanceTrigger
   - QuestionTrigger
+  - End
   layers:
   - Default
   - TransparentFX

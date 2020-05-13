@@ -18,7 +18,7 @@ public static class Leaderboard
         }
     }
 
-    private static List<ScoreEntry> s_Entries;
+    private static List<ScoreEntry> s_Entries = new List<ScoreEntry>();
 
     private static List<ScoreEntry> Entries
     {
@@ -40,7 +40,8 @@ public static class Leaderboard
         s_Entries.Sort((a, b) => b.score.CompareTo(a.score));
     }
 
-    public static void LoadScores()
+    /*
+    public static List<ScoreEntry> LoadScores()
     {
         s_Entries = new List<ScoreEntry>();
         s_Entries.Clear();
@@ -54,6 +55,7 @@ public static class Leaderboard
         }
 
         SortScores();
+        return s_Entries;
     }
 
     private static void SaveScores()
@@ -65,6 +67,34 @@ public static class Leaderboard
             PlayerPrefs.SetInt(PlayerPrefsBaseKey + "[" + i + "].score", entry.score);
         }
     }
+    */
+
+    public static List<ScoreEntry> LoadScores()
+    {
+        s_Entries = new List<ScoreEntry>();
+        s_Entries.Clear();
+
+        for (int i = 0; i < EntryCount; ++i)
+        {
+            ScoreEntry entry;
+            entry.name = PlayerPrefs.GetString(PlayerPrefsBaseKey + i + "name", "");
+            entry.score = PlayerPrefs.GetInt(PlayerPrefsBaseKey + i + "score", 0);
+            s_Entries.Add(entry);
+        }
+
+        SortScores();
+        return s_Entries;
+    }
+
+    private static void SaveScores()
+    {
+        for (int i = 0; i < s_Entries.Count; ++i)
+        {
+            var entry = s_Entries[i];
+            PlayerPrefs.SetString(PlayerPrefsBaseKey + i + "name", entry.name);
+            PlayerPrefs.SetInt(PlayerPrefsBaseKey + i + "score", entry.score);
+        }
+    }
 
     public static ScoreEntry GetEntry(int index)
     {
@@ -73,9 +103,9 @@ public static class Leaderboard
 
     public static void Record(string name, int score)
     {
-        Entries.Add(new ScoreEntry(name, score));
+        s_Entries.Add(new ScoreEntry(name, score));
         SortScores();
-        Entries.RemoveAt(Entries.Count - 1);
+        //s_Entries.RemoveAt(Entries.Count - 1);
         SaveScores();
     }
 
@@ -85,6 +115,7 @@ public static class Leaderboard
         for (int i = 0; i < s_Entries.Count; i++)
         {
             ScoreEntry item = (ScoreEntry)s_Entries[i];
+            
             if (!string.IsNullOrEmpty(item.name))
             {
                 s += i + " - " + item.name + " | " + item.score +"\n";
