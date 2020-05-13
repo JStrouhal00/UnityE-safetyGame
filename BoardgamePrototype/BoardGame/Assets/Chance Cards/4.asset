@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed9686a688977da4d97e4a8275b8da4a, type: 3}
   m_Name: 4
   m_EditorClassIdentifier: 
-  statement: Go forward 5 spaces
-  myChance: 1
-  quantity: 5
+  statement: Evade!
+  myChance: 0
+  quantity: 0

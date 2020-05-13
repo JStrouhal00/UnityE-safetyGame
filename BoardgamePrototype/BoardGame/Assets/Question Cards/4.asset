@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5d2e9717150314183d80b9742aeca3, type: 3}
   m_Name: 4
   m_EditorClassIdentifier: 
-  question: Banana is ?
-  answerA: Blue
-  answerB: Yellow
+  question: You can safely open any email in your junk/spam folder.
+  answerA: True
+  answerB: False
   AIsRight: 0

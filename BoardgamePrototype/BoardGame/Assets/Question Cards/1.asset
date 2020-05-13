@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5d2e9717150314183d80b9742aeca3, type: 3}
   m_Name: 1
   m_EditorClassIdentifier: 
-  question: 5 x 10 = 25
+  question: You can always use a webcom when talking to people you've only met online.
   answerA: True
   answerB: False
-  AIsRightAnswer: 0
+  AIsRight: 0
