@@ -55,7 +55,7 @@ public class Stone : MonoBehaviour
 
             yield return new WaitForSeconds(0.1f);
             stepsToMove -= stepsToMove < 0 ? -1 : 1;
-            doneSteps++;
+            doneSteps += stepsToMove < 0 ? -1 : 1;
             
         }
 
@@ -88,9 +88,11 @@ public class Stone : MonoBehaviour
     public void MakeTurn(int diceNumber)
     {
         stepsToMove = diceNumber;
+        StartCoroutine(Move());
+        /*
         if (doneSteps + stepsToMove <= route.nodeList.Count)
         {
-            StartCoroutine(Move());
+            
         }
         else
         {
@@ -98,5 +100,6 @@ public class Stone : MonoBehaviour
             //UPDATE THE GAMEMANAGER
             GameManager.instance.state = GameManager.States.SWITCH_PLAYER;
         }
+        */
     }
 }
